@@ -20,9 +20,10 @@ import com.example.appbussines.Fragments.ListCargosFragment;
 import com.example.appbussines.Fragments.ListPaisesFragment;
 import com.example.appbussines.Fragments.ListPersonalFragment;
 import com.example.appbussines.Fragments.User.UserFragment;
+import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.google.android.material.navigation.NavigationView;
 
-public class ContentActivity extends AppCompatActivity  {
+public class ContentActivity extends AppCompatActivity implements onFragmentBtnSelected {
 
     private static final String TAG = "MenuContainer";
     private Fragment currentFragment;
@@ -60,23 +61,6 @@ public class ContentActivity extends AppCompatActivity  {
         fragmentTransaction.add(R.id.frame_layout,new ListPersonalFragment());
         fragmentTransaction.commit();
     }
-    /*
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        drawerLayout.closeDrawer(GravityCompat.START);
-            switch (item.getItemId()){
-                case R.id.my_acount:
-                    loadFragment( new UserFragment() );
-                    return true;
-                case R.id.Personal:
-                    loadFragment( new ListPersonalFragment() );
-                    return true;
-            }
-
-        return false;
-    }
-    */
-
     private final NavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
         @SuppressLint("NonConstantResourceId")
         @Override
@@ -110,26 +94,9 @@ public class ContentActivity extends AppCompatActivity  {
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
     }
-    /*
-    private void loadFragment(Fragment fragment){
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        if (fragment.isAdded()) {
-            if (currentFragment != null)
-                transaction.hide(currentFragment).show(fragment);
-        } else {
-            if (currentFragment != null)
-                transaction.hide(currentFragment).add(R.id.container, fragment, "Hl");
-            else
-                transaction.add(R.id.container, fragment, "HL");
-        }
-        //transaction.replace(R.id.container, fragment);
-        //transaction.addToBackStack(null);
-        transaction.commit();
-        currentFragment = fragment;
 
-    }*/
-
-
+    @Override
+    public void onButtonSelected(Fragment fragment) {
+        LoadFrag( fragment);
+    }
 }

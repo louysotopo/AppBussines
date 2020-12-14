@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Personal.ViewPersonalFragment">
+    tools:context=".Fragments.Personal.AddPersonalFragment">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,6 +29,7 @@
                 android:paddingTop="5dp"
                 android:paddingEnd="5dp"
                 android:text="Nuevo Personal"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -39,83 +42,85 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
                     android:shadowColor="@color/black"
                     android:text="Nombres"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/textView_viewperson_firstname"
+
+                <EditText
+                    android:id="@+id/editText_TextPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    />
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textAlignment="textStart"
+                    android:textSize="14sp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
                     android:shadowColor="@color/black"
                     android:text="Apellidos"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/textView_viewperson_lastname"
+
+                <EditText
+                    android:id="@+id/editText_TextPersonLastname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    />
-
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textAlignment="textStart"
+                    android:textSize="14sp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
                     android:shadowColor="@color/black"
                     android:text="E-mail"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/textView_viewperson_email"
+
+                <EditText
+                    android:id="@+id/editText_TextPersonEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    />
-
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:textAlignment="textStart"
+                    android:textSize="14sp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
                     android:shadowColor="@color/black"
                     android:text="Cargo"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/textView_viewperson_position"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    />
+
+                <Spinner
+                    android:id="@+id/spinnerPosition_add_personal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
                     android:shadowColor="@color/black"
                     android:text="Fecha de Cumpleaños"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView_viewperson_DateBirthday"
+                    android:id="@+id/editText_TextPersonDateBirthday"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/text_border_black"
                     android:ems="10"
-                    android:fontFamily="@font/roboto"
-                    android:gravity="center_vertical"
+                    android:gravity="center|center_vertical"
+                    android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:visibility="visible" />
@@ -124,20 +129,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
                     android:shadowColor="@color/black"
                     android:text="Fecha de Ingreso"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView_viewperson_DateIncome"
+                    android:id="@+id/editText_TextPersonDateIncome"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/text_border_black"
                     android:ems="10"
-                    android:fontFamily="@font/roboto"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="aaaa"
+                    android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -145,41 +150,40 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
                     android:shadowColor="@color/black"
                     android:text="Pais"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/textView_viewperson_country"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    />
+
+                <Spinner
+                    android:id="@+id/spinnerCountries_add_personal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
                     android:shadowColor="@color/black"
                     android:text="Edad"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/textView_viewperson_age"
-                    android:layout_width="match_parent"
+
+                <EditText
+                    android:id="@+id/editText_TextPersonAge"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    />
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="textStart"
+                    android:textSize="14sp" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switch_view_personal"
+                    android:id="@+id/switch_add_personal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
                     android:text="Estado"
                     android:textColor="#000000"
                     android:textStyle="bold" />
@@ -190,41 +194,29 @@
                     android:layout_marginTop="20dp">
 
                     <Button
-                        android:id="@+id/button_editar_view_personal"
+                        android:id="@+id/button_aceptar_add_personal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="1dp"
-                        android:fontFamily="@font/roboto"
-                        android:text="Editar"
+                        android:text="Registrar"
                         android:textAlignment="center" />
 
                     <Button
-                        android:id="@+id/button_eliminar_view_personal"
+                        android:id="@+id/button_cancelar_add_personal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginEnd="1dp"
-                        android:fontFamily="@font/roboto"
-                        android:text="Eliminar" />
+                        android:text="Cancelar" />
                 </RelativeLayout>
 
-                <Button
-                    android:id="@+id/button_salir_view_personal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto"
-                    android:text="Salir" />
 
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

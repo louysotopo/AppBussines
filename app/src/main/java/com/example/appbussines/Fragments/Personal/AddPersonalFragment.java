@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,7 +19,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.appbussines.Entities.Personal;
 import com.example.appbussines.Fragments.ListPersonalFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
@@ -30,20 +30,13 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link EditPersonalFragment#newInstance} factory method to
+ * Use the {@link AddPersonalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditPersonalFragment extends Fragment {
+public class AddPersonalFragment extends Fragment {
     //transacciones
     private View view;
     private onFragmentBtnSelected listener;
-    private Personal personal;
-
-    // wigets y campos de texto
-    private EditText textEditFirstName;
-    private EditText textEditLastName;
-    private EditText textEditEmail;
-    private EditText textEditAge;
 
     //dates
     private TextView editTextDateBirthday;
@@ -69,22 +62,18 @@ public class EditPersonalFragment extends Fragment {
     private int stateSelected;
     private SwitchMaterial switchMaterialstate;
 
-    // ignorar
+
+    //
+    // ignore
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-    // ignorar
+    // fin ignore
+    public AddPersonalFragment() { }
 
-    public EditPersonalFragment() {
-        // Required empty public constructor
-    }
-    public EditPersonalFragment(Personal personal){
-        this.personal = personal;
-    }
-
-    public static EditPersonalFragment newInstance(String param1, String param2) {
-        EditPersonalFragment fragment = new EditPersonalFragment();
+    public static AddPersonalFragment newInstance(String param1, String param2) {
+        AddPersonalFragment fragment = new AddPersonalFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -100,6 +89,20 @@ public class EditPersonalFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_add_personal, container, false);
+        initPositions();
+        initCountries();
+        initDates();
+        initEditText();
+        initButtons();
+        return view;
+
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -112,47 +115,11 @@ public class EditPersonalFragment extends Fragment {
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_edit_personal, container, false);
-        // el orden de invocacion es importante :v
-        initComponentes();;
-        initPositions();
-        initCountries();
-        initDates();
-        initButtons();
-
-        setData();
-        return view;
-    }
-
-    private void initComponentes(){
-        //EditText
-        textEditFirstName = view.findViewById(R.id.editText_EditPerson_firstName);
-        textEditLastName = view.findViewById(R.id.editText_editperson_Lastname);
-        textEditEmail =  view.findViewById(R.id.editText_editperson_Email);
-        textEditAge = view.findViewById(R.id.editText_editperson_Age);
-
-        //fechas
-        editTextDateBirthday = view.findViewById(R.id.editText_editperson_DateBirthday);
-        editTextDateincome = view.findViewById(R.id.editText_editperson_DateIncome);
-
-        //spinners
-        spinnerPositions = view.findViewById(R.id.spinnerPosition_edit_personal);
-        spinnerCountries= view.findViewById(R.id.spinnerCountries_edit_personal);
-
-        //buttons
-        buttonAceptar = view.findViewById(R.id.button_guardar_edit_personal);
-        buttonCancelar = view.findViewById(R.id.button_cancelar_edit_personal);
-
-        //swithc
-        switchMaterialstate = view.findViewById(R.id.switch_edit_personal);
-    }
     private void initPositions(){
         //campos
         //spinner de cargos
         listPositions = getListPositions();
+        spinnerPositions = view.findViewById(R.id.spinnerPosition_add_personal);
         arrayAdapterPositions= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listPositions);
         arrayAdapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPositions.setAdapter(arrayAdapterPositions);
@@ -160,12 +127,13 @@ public class EditPersonalFragment extends Fragment {
     private void  initCountries(){
         //spinner paises
         listCountries = getListCountries();
+        spinnerCountries= view.findViewById(R.id.spinnerCountries_add_personal);
         arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listCountries);
         arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCountries.setAdapter(arrayAdapterCountries);
     }
     private void initDates(){
-
+        editTextDateBirthday = view.findViewById(R.id.editText_TextPersonDateBirthday);
         editTextDateBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,6 +149,7 @@ public class EditPersonalFragment extends Fragment {
             }
         });
 
+        editTextDateincome = view.findViewById(R.id.editText_TextPersonDateIncome);
         editTextDateincome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,41 +180,36 @@ public class EditPersonalFragment extends Fragment {
 
     }
     private void initButtons(){
+        buttonAceptar = view.findViewById(R.id.button_aceptar_add_personal);
+        buttonCancelar = view.findViewById(R.id.button_cancelar_add_personal);
 
         buttonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 countrySelected = spinnerCountries.getSelectedItem().toString();
                 positionSelected = spinnerPositions.getSelectedItem().toString();
-                stateSelected = 1;
+                stateSelected =  1;
                 Log.d("APF",countrySelected);
                 Log.d("APF",positionSelected);
                 Log.d("APF",stateSelected+"");
-                listener.onButtonSelected( new ViewPersonalFragment(personal));
+                //listener.onButtonSelected( new ListPersonalFragment());
             }
         });
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onButtonSelected( new ViewPersonalFragment( personal));
+                listener.onButtonSelected( new ListPersonalFragment());
             }
         });
     }
-    private void setData(){
-        if(personal != null){
-            textEditFirstName.setText(personal.getFirstname());
-            textEditLastName.setText(personal.getLastname());
-            textEditEmail.setText(personal.getEmail());
-            textEditAge.setText(personal.getAge());
-            editTextDateBirthday.setText(personal.getBirthdate());
-            editTextDateincome.setText(personal.getIncomingdate());
 
-            //añadir los demas, os spinner y el swithc no me acuerdo :v
 
-        }
-
+    private  void initEditText(){
+        switchMaterialstate = view.findViewById(R.id.switch_add_personal);
     }
+
+
     private List<String> getListPositions(){
         //si es posible crear un sigleton para no tener que estar pidiendo muchas veces  a la base de datos la lista de posiciones
         //
@@ -264,7 +228,6 @@ public class EditPersonalFragment extends Fragment {
         countries.add("Brazil");
         return countries;
     }
-
 
 
 }

@@ -1,16 +1,30 @@
 package com.example.appbussines.Fragments;
 
+import android.app.Person;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.example.appbussines.Adapters.AdapterPersonal;
+import com.example.appbussines.Entities.Personal;
+import com.example.appbussines.Fragments.Personal.AddPersonalFragment;
+import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,32 +32,23 @@ import com.example.appbussines.R;
  * create an instance of this fragment.
  */
 public class ListPersonalFragment extends Fragment {
-
+    List<Personal> personalList;
     RecyclerView recyclerView;
+    AdapterPersonal adapterPersonal;
     SearchView searchView;
     View view;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    FloatingActionButton floatingActionButton;
+        // ignorar , secreo automaticamente
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";c
-
-    // TODO: Rename and change types of parameters
+    private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+    // deja de ignorar
+    private onFragmentBtnSelected listener;
 
-    public ListPersonalFragment() {
 
-    }
+    public ListPersonalFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListPersonalFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ListPersonalFragment newInstance(String param1, String param2) {
         ListPersonalFragment fragment = new ListPersonalFragment();
         Bundle args = new Bundle();
@@ -69,7 +74,47 @@ public class ListPersonalFragment extends Fragment {
         init();
         return view;
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if( context instanceof  onFragmentBtnSelected ){
+            listener=(onFragmentBtnSelected) context;
+        }
+        else{
+            Log.d("LPF","Implemeentar listener");
+        }
+
+    }
+
     private  void init(){
+        //lista de personal
+        recyclerView = view.findViewById(R.id.recyclerPersonal);
+        recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
+        personalList =  getDataBase(); // asignar al personallist la lista de personal que se obtenga de la base de datos :v
+        adapterPersonal = new AdapterPersonal(personalList, getContext());
+        recyclerView.setAdapter(adapterPersonal);
+
+        // boton para añadir  personal
+        floatingActionButton = view.findViewById(R.id.floatingActionButton_add_personal);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onButtonSelected( new AddPersonalFragment());
+                //Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
+
+
+
+
+    }
+    private List<Personal> getDataBase(){
+        List<Personal> per = new ArrayList<Personal>();
+        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        return per;
 
     }
 }
