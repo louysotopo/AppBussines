@@ -35,21 +35,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:shadowColor="@color/black"
-                android:text="Nombres"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/textView_viewcountry_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto"
                 android:shadowColor="@color/black"
@@ -62,6 +47,21 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:shadowColor="@color/black"
+                android:text="Nombres"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_viewcountry_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switch_view_country"

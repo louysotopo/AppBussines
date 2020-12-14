@@ -1,11 +1,14 @@
 package com.example.appbussines.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,11 @@ import com.example.appbussines.Adapters.AdapterCountry;
 import com.example.appbussines.Adapters.AdapterPosition;
 import com.example.appbussines.Entities.Cargo;
 import com.example.appbussines.Entities.Pais;
+import com.example.appbussines.Fragments.Paises.AddCountryFragment;
+import com.example.appbussines.Fragments.Personal.AddPersonalFragment;
+import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +32,15 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ListPaisesFragment extends Fragment {
+    //transations
     private View view;
+    private onFragmentBtnSelected listener;
 
-
+    //widgets
     private List<Pais> paisList;
     private RecyclerView recyclerView;
     private AdapterCountry adapterCountry;
+    FloatingActionButton floatingActionButton;
 
     // ignorar
     private static final String ARG_PARAM1 = "param1";
@@ -58,6 +68,17 @@ public class ListPaisesFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if( context instanceof  onFragmentBtnSelected ){
+            listener=(onFragmentBtnSelected) context;
+        }
+        else{
+            Log.d("LPF","Implemeentar listener");
+        }
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +94,15 @@ public class ListPaisesFragment extends Fragment {
         paisList =  getDataBase(); // asignar al personallist la lista de personal que se obtenga de la base de datos :v
         adapterCountry = new AdapterCountry(paisList, getContext());
         recyclerView.setAdapter(adapterCountry);
+
+        floatingActionButton = view.findViewById(R.id.floatingActionButton_add_pais);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onButtonSelected( new AddCountryFragment());
+                //Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
     }
     private  List<Pais> getDataBase(){
         List<Pais> paises = new ArrayList<>();
