@@ -199,6 +199,7 @@ public class AddPersonalFragment extends Fragment {
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 listener.onButtonSelected( new ListPersonalFragment());
             }
         });
@@ -209,9 +210,10 @@ public class AddPersonalFragment extends Fragment {
         switchMaterialstate = view.findViewById(R.id.switch_add_personal);
     }
 
-
+    //  LLAMAR A LA BASE DE DATOS
     private List<String> getListPositions(){
-        //si es posible crear un sigleton para no tener que estar pidiendo muchas veces  a la base de datos la lista de posiciones
+        //  LLAMAR A LA BASE DE DATOS
+        // si es posible crear un sigleton para no tener que estar pidiendo muchas veces  a la base de datos la lista de posiciones
         //
         List<String> positions = new ArrayList<>();
         positions.add("Consultor");
@@ -221,6 +223,7 @@ public class AddPersonalFragment extends Fragment {
         return positions;
     }
     private List<String> getListCountries(){
+        //  LLAMAR A LA BASE DE DATOS
         List<String> countries = new ArrayList<>();
         countries.add("Peru");
         countries.add("Chile");

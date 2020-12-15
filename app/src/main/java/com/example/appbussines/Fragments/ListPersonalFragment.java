@@ -109,6 +109,7 @@ public class ListPersonalFragment extends Fragment {
 
 
     }
+    // Aqui poner metodito getDatosss
     private List<Personal> getDataBase(){
         List<Personal> per = new ArrayList<Personal>();
         per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
