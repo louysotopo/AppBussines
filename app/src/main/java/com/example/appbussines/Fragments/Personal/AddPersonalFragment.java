@@ -19,10 +19,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.appbussines.Entities.Personal;
 import com.example.appbussines.Fragments.ListPersonalFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +39,9 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class AddPersonalFragment extends Fragment {
+
+    private FirebaseDatabase database;
+
     //transacciones
     private View view;
     private onFragmentBtnSelected listener;
@@ -213,7 +221,21 @@ public class AddPersonalFragment extends Fragment {
     //  LLAMAR A LA BASE DE DATOS
     private List<String> getListPositions(){
         //  LLAMAR A LA BASE DE DATOS
-        // si es posible crear un sigleton para no tener que estar pidiendo muchas veces  a la base de datos la lista de posiciones
+
+        database = FirebaseDatabase.getInstance();
+        database.getReference().child("usuarios").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.child("Nombre").getValue().toString();
+                Personal p = new Personal("i",name,"n","n","n","n","n","n","n","n");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         //
         List<String> positions = new ArrayList<>();
         positions.add("Consultor");
