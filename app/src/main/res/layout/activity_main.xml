@@ -74,6 +74,7 @@
                 android:background="@drawable/text_rounded"
                 android:elevation="6dp"
                 android:ems="10"
+                android:hint="Usuario"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 android:textSize="18sp" />
@@ -98,6 +99,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:hint="contraseña"
                 android:background="@drawable/text_rounded"
                 android:elevation="6dp"
                 android:ems="10"
