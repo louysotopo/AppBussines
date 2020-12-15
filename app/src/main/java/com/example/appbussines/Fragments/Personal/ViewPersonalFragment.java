@@ -1,14 +1,23 @@
 package com.example.appbussines.Fragments.Personal;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.appbussines.Entities.Personal;
+import com.example.appbussines.Fragments.ListPersonalFragment;
+import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,18 +25,38 @@ import com.example.appbussines.R;
  * create an instance of this fragment.
  */
 public class ViewPersonalFragment extends Fragment {
+    //transacciones
+    private View view;
+    private onFragmentBtnSelected listener;
+    private Personal personal;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // wigets y campos de texto
+    private TextView textViewFirstName;
+    private TextView textViewLastName;
+    private TextView textViewEmail;
+    private TextView textViewPosition;
+    private TextView textViewDateBirthday;
+    private TextView textViewDateincome;
+    private TextView textViewCountry;
+    private TextView textViewAge;
+    private SwitchMaterial switchStatus;
+    // botones
+    private Button buttonModificar;
+    private Button buttonEliminar;
+    private Button buttonSalir;
+
+
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public ViewPersonalFragment() {
-        // Required empty public constructor
+    public ViewPersonalFragment() {}
+    public ViewPersonalFragment(Personal personal) {
+        this.personal = personal;
+        Log.d("FEP",personal.getFirstname());
     }
 
     /**
@@ -56,11 +85,77 @@ public class ViewPersonalFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if( context instanceof  onFragmentBtnSelected ){
+            listener=(onFragmentBtnSelected) context;
+        }
+        else{
+            Log.d("LPF","Implemeentar listener");
+        }
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_personal, container, false);
+        view = inflater.inflate(R.layout.fragment_view_personal, container, false);
+        initComponents();
+        setData();
+        initButtons();
+        return view;
+    }
+    private void initComponents(){
+         textViewFirstName = view.findViewById(R.id.textView_viewperson_firstname);
+         textViewLastName = view.findViewById(R.id.textView_viewperson_lastname);
+         textViewEmail = view.findViewById(R.id.textView_viewperson_email);
+         textViewPosition = view.findViewById(R.id.textView_viewperson_position);
+         textViewDateBirthday =  view.findViewById(R.id.textView_viewperson_DateBirthday);
+         textViewDateincome = view.findViewById(R.id.textView_viewperson_DateIncome);
+         textViewCountry = view.findViewById(R.id.textView_viewperson_country);
+         textViewAge = view.findViewById(R.id.textView_viewperson_age);
+         switchStatus = view.findViewById(R.id.switch_view_personal);
+         // buttons
+         buttonModificar= view.findViewById(R.id.button_editar_view_personal);
+         buttonEliminar= view.findViewById(R.id.button_eliminar_view_personal);
+         buttonSalir= view.findViewById(R.id.button_salir_view_personal);
+
+
+    }
+    private void setData(){
+        if(personal != null){
+            textViewFirstName.setText(personal.getFirstname());
+            textViewLastName.setText(personal.getLastname());
+            textViewEmail.setText(personal.getEmail());
+            textViewPosition.setText(personal.getPosition());
+            textViewDateBirthday.setText(personal.getBirthdate());
+            textViewDateincome.setText(personal.getIncomingdate());
+            textViewCountry.setText(personal.getCountry());
+            textViewAge.setText(personal.getAge());
+            // no se que haCer con el switchStatus :'v
+
+        }
+
+
+    }private  void initButtons(){
+        buttonModificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onButtonSelected( new EditPersonalFragment(personal));
+            }
+        });
+        buttonEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onButtonSelected( new ListPersonalFragment());
+            }
+        });
+        buttonSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onButtonSelected( new ListPersonalFragment());
+            }
+        });
     }
 }

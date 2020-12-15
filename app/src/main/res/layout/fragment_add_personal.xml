@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Personal.EditPersonalFragment">
+    tools:context=".Fragments.Personal.AddPersonalFragment">
 
 
     <ScrollView
@@ -27,7 +28,7 @@
                 android:gravity="center"
                 android:paddingTop="5dp"
                 android:paddingEnd="5dp"
-                android:text="Editar Personal"
+                android:text="Nuevo Personal"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -47,7 +48,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText_EditPerson_firstName"
+                    android:id="@+id/editText_TextPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -65,7 +66,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText_editperson_Lastname"
+                    android:id="@+id/editText_TextPersonLastname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -82,7 +83,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText_editperson_Email"
+                    android:id="@+id/editText_TextPersonEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -99,7 +100,7 @@
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/spinnerPosition_edit_personal"
+                    android:id="@+id/spinnerPosition_add_personal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -113,7 +114,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/editText_editperson_DateBirthday"
+                    android:id="@+id/editText_TextPersonDateBirthday"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:background="@drawable/text_border_black"
@@ -134,7 +135,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/editText_editperson_DateIncome"
+                    android:id="@+id/editText_TextPersonDateIncome"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:background="@drawable/text_border_black"
@@ -155,7 +156,7 @@
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/spinnerCountries_edit_personal"
+                    android:id="@+id/spinnerCountries_add_personal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -169,7 +170,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editText_editperson_Age"
+                    android:id="@+id/editText_TextPersonAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -178,7 +179,7 @@
                     android:textSize="14sp" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switch_edit_personal"
+                    android:id="@+id/switch_add_personal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -193,17 +194,17 @@
                     android:layout_marginTop="20dp">
 
                     <Button
-                        android:id="@+id/button_guardar_edit_personal"
+                        android:id="@+id/button_aceptar_add_personal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="1dp"
-                        android:text="Guardar"
+                        android:text="Registrar"
                         android:textAlignment="center" />
 
                     <Button
-                        android:id="@+id/button_cancelar_edit_personal"
+                        android:id="@+id/button_cancelar_add_personal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"

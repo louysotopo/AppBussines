@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".Fragments.User.UserFragment">
+    tools:context=".Fragments.Cargos.AddPositionFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingEnd="5dp"
-            android:text="Mi Cuenta"
+            android:text="Nuevo Cargo"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -37,12 +37,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:shadowColor="@color/black"
-                android:text="Nombre"
+                android:text="Codigo"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editText_user_name"
+                android:id="@+id/editText_addposition_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -55,12 +55,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:shadowColor="@color/black"
-                android:text="Contraseña"
+                android:text="Nombre"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editText_user_password"
+                android:id="@+id/editText_addposition_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -69,7 +69,7 @@
                 android:textSize="14sp" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switch_add_country"
+                android:id="@+id/switch_add_cargo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -84,32 +84,28 @@
                 android:layout_marginTop="20dp">
 
                 <Button
-                    android:id="@+id/button_aceptar_user"
+                    android:id="@+id/button_aceptar_add_cargo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="1dp"
-                    android:text="Editar"
+                    android:text="Registrar"
                     android:textAlignment="center" />
 
                 <Button
-                    android:id="@+id/button_cancelar_user"
+                    android:id="@+id/button_cancelar_add_cargo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="1dp"
-                    android:text="Salir" />
+                    android:text="Cancelar" />
             </RelativeLayout>
 
 
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

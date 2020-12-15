@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".Fragments.User.UserFragment">
+    tools:context=".Fragments.Paises.ViewCountryFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,8 +22,7 @@
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingEnd="5dp"
-            android:text="Mi Cuenta"
-            android:textAlignment="center"
+            android:text="Datos de Pais"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -36,44 +35,41 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
                 android:shadowColor="@color/black"
-                android:text="Nombre"
+                android:text="Codigo"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editText_user_name"
+            <TextView
+                android:id="@+id/textView_viewcountry_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="textStart"
-                android:textSize="14sp" />
+                android:fontFamily="@font/roboto"
+                />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
                 android:shadowColor="@color/black"
-                android:text="Contraseña"
+                android:text="Nombres"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editText_user_password"
+            <TextView
+                android:id="@+id/textView_viewcountry_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="textStart"
-                android:textSize="14sp" />
+                android:fontFamily="@font/roboto" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switch_add_country"
+                android:id="@+id/switch_view_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
                 android:text="Estado"
                 android:textColor="#000000"
                 android:textStyle="bold" />
@@ -84,32 +80,39 @@
                 android:layout_marginTop="20dp">
 
                 <Button
-                    android:id="@+id/button_aceptar_user"
+                    android:id="@+id/button_editar_view_country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="1dp"
+                    android:fontFamily="@font/roboto"
                     android:text="Editar"
                     android:textAlignment="center" />
 
                 <Button
-                    android:id="@+id/button_cancelar_user"
+                    android:id="@+id/button_eliminar_view_country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="1dp"
-                    android:text="Salir" />
+                    android:fontFamily="@font/roboto"
+                    android:text="Eliminar" />
             </RelativeLayout>
 
+            <Button
+                android:id="@+id/button_salir_view_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
+                android:text="Salir" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>
