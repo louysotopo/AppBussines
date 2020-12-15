@@ -124,7 +124,7 @@ public class ListPersonalFragment extends Fragment {
                 if(snapshot.exists()){
                     personalList.clear();
                     for (DataSnapshot ds: snapshot.getChildren()){
-                        String name = ds.child("Nombre").getValue().toString();
+                        String name = ds.child("nombre").getValue().toString();
 
                         Personal p = new Personal("i",name,"n","n","n","n","n","n","n","n");
                         personalList.add(p);

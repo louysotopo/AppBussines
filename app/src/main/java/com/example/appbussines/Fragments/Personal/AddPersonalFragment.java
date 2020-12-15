@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.appbussines.Entities.Personal;
 import com.example.appbussines.Fragments.ListPersonalFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
+import com.example.appbussines.MainActivity;
 import com.example.appbussines.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.database.DataSnapshot;
@@ -43,6 +44,13 @@ import java.util.Map;
 public class AddPersonalFragment extends Fragment {
 
     private FirebaseDatabase database;
+
+    private TextView nombre;
+    private TextView apellido;
+    private TextView correo;
+    private TextView ingreso;
+    private TextView nacimiento;
+    private TextView edad;
 
     //transacciones
     private View view;
@@ -99,7 +107,6 @@ public class AddPersonalFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        database=FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -111,6 +118,15 @@ public class AddPersonalFragment extends Fragment {
         initDates();
         initEditText();
         initButtons();
+
+        database=FirebaseDatabase.getInstance();
+        nombre = (TextView) view.findViewById(R.id.editText_TextPersonName);
+        apellido = (TextView) view.findViewById(R.id.editText_TextPersonLastname);
+        correo = (TextView) view.findViewById(R.id.editText_TextPersonEmail);
+        ingreso = (TextView) view.findViewById(R.id.editText_TextPersonDateIncome);
+        nacimiento = (TextView) view.findViewById(R.id.editText_TextPersonDateBirthday);
+        edad = (TextView) view.findViewById(R.id.editText_TextPersonAge);
+
         return view;
 
     }
@@ -207,9 +223,19 @@ public class AddPersonalFragment extends Fragment {
                 //listener.onButtonSelected( new ListPersonalFragment());
 
                 Map<String,Object> map=new HashMap<>();
-                map.put("Codigo",51);
-                map.put("Descripción","Perú");
+                map.put("codigo",1);
+                map.put("nombre",nombre.getText().toString());
+                map.put("apellido",apellido.getText().toString());
+                map.put("correo",correo.getText().toString());
+                map.put("position",positionSelected);
+                map.put("ingreso",ingreso.getText().toString());
+                map.put("nacimiento",nacimiento.getText().toString());
+                map.put("pais",countrySelected);
+                map.put("edad",edad.getText().toString());
+                map.put("estado",stateSelected);
+
                 database.getReference().child("usuarios").push().setValue(map);
+                listener.onButtonSelected( new ListPersonalFragment());
             }
         });
 
