@@ -31,7 +31,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +72,7 @@ public class AddPersonalFragment extends Fragment {
     private int stateSelected;
     private SwitchMaterial switchMaterialstate;
 
+    private ArrayList<Personal> personalList;
 
     //
     // ignore
@@ -96,6 +99,7 @@ public class AddPersonalFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        database=FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -201,6 +205,11 @@ public class AddPersonalFragment extends Fragment {
                 Log.d("APF",positionSelected);
                 Log.d("APF",stateSelected+"");
                 //listener.onButtonSelected( new ListPersonalFragment());
+
+                Map<String,Object> map=new HashMap<>();
+                map.put("Codigo",51);
+                map.put("Descripción","Perú");
+                database.getReference().child("usuarios").push().setValue(map);
             }
         });
 
@@ -221,21 +230,6 @@ public class AddPersonalFragment extends Fragment {
     //  LLAMAR A LA BASE DE DATOS
     private List<String> getListPositions(){
         //  LLAMAR A LA BASE DE DATOS
-
-        database = FirebaseDatabase.getInstance();
-        database.getReference().child("usuarios").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = snapshot.child("Nombre").getValue().toString();
-                Personal p = new Personal("i",name,"n","n","n","n","n","n","n","n");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         //
         List<String> positions = new ArrayList<>();
         positions.add("Consultor");

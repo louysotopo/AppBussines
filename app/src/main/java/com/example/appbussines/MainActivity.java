@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         map.put("Rol","Administrador");
         mDatabase.child("usuarios").push().setValue(map);
 
-        DatabaseReference mDatabase2;
+        /*DatabaseReference mDatabase2;
         mDatabase2 = FirebaseDatabase.getInstance().getReference();
         Map<String,Object> map2=new HashMap<>();
         map2.put("Codigo",51);
@@ -68,6 +68,6 @@ public class MainActivity extends AppCompatActivity {
         Map<String,Object> map3=new HashMap<>();
         map3.put("Codigo",01);
         map3.put("Descripción","Administrador");
-        mDatabase3.child("cargo").push().setValue(map3);
+        mDatabase3.child("cargo").push().setValue(map3);*/
     }
 }

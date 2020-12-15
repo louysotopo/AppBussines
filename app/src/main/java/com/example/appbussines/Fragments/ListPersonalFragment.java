@@ -22,6 +22,10 @@ import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +49,7 @@ public class ListPersonalFragment extends Fragment {
     private String mParam2;
     // deja de ignorar
     private onFragmentBtnSelected listener;
-
+    private FirebaseDatabase database;
 
     public ListPersonalFragment() {}
 
@@ -65,6 +69,7 @@ public class ListPersonalFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        getDataBase();
     }
 
     @Override
@@ -112,9 +117,31 @@ public class ListPersonalFragment extends Fragment {
     // Aqui poner metodito getDatosss
     private List<Personal> getDataBase(){
         List<Personal> per = new ArrayList<Personal>();
-        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
-        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
-        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        database = FirebaseDatabase.getInstance();
+        database.getReference().child("usuarios").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    personalList.clear();
+                    for (DataSnapshot ds: snapshot.getChildren()){
+                        String name = ds.child("Nombre").getValue().toString();
+
+                        Personal p = new Personal("i",name,"n","n","n","n","n","n","n","n");
+                        personalList.add(p);
+                    }
+                    adapterPersonal = new AdapterPersonal(personalList,getContext());
+                    recyclerView.setAdapter(adapterPersonal);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        //per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        //per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
         return per;
 
     }
