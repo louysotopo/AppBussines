@@ -141,6 +141,13 @@ public class ViewPositionFragment extends Fragment {
         if(this.cargo != null){
             textViewCode.setText(cargo.getCode());
             textViewName.setText(cargo.getName());
+            boolean sw = false;
+            switch (cargo.getStatus()) {
+                case 1:   sw = true ; break;
+                case 2:   sw = false; break;
+                default:
+            }
+            switchStatus.setChecked(sw);
         }
     }
 }

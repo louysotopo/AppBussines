@@ -21,8 +21,14 @@ import com.example.appbussines.Fragments.Paises.AddCountryFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,10 +37,13 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ListCargosFragment extends Fragment {
+    // [START declare_database_ref]
+    private DatabaseReference mDatabase;
+    // [END declare_database_ref]
+
     //transacciones
     private onFragmentBtnSelected listener;
     private View view;
-
 
     private List<Cargo> cargoList;
     private RecyclerView recyclerView;
@@ -65,6 +74,9 @@ public class ListCargosFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // [START initialize_database_ref]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // [END initialize_database_ref]
     }
     @Override
     public void onAttach(@NonNull Context context) {
@@ -89,19 +101,44 @@ public class ListCargosFragment extends Fragment {
     private  void initList(){
         recyclerView = view.findViewById(R.id.recyclerPositions);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
-        cargoList =  getDataBase(); // asignar al personallist la lista de personal que se obtenga de la base de datos :v
-        adapterPosition = new AdapterPosition(cargoList, getContext());
-        recyclerView.setAdapter(adapterPosition);
+        getDataBase();
 
 
     }
 
-    private List<Cargo> getDataBase(){
-        List<Cargo> cargos = new ArrayList<>();
+    private void getDataBase(){
+        cargoList = new ArrayList<>();
+        mDatabase.child("Cargo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        String code = ds.child("code").getValue().toString();
+                        String name = ds.child("name").getValue().toString();
+                        int status = Integer.parseInt(ds.child("status").getValue().toString());
+
+                        System.out.println((new Cargo(code,name,status)).toString());
+                        cargoList.add(new Cargo(code,name,status));
+                    }
+                    adapterPosition = new AdapterPosition(cargoList, getContext());
+                    recyclerView.setAdapter(adapterPosition);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        /* List<Cargo> cargos = new ArrayList<>();
         cargos.add( new Cargo("001","Contratista",1));
         cargos.add( new Cargo("002","SuperIntendente",0));
         cargos.add( new Cargo("003","Secretario",1));
-        return cargos;
+        */
+
+       // return cargos;
+
     }
     private void  initButton(){
         floatingActionButton = view.findViewById(R.id.floatingActionButton_add_cargo);

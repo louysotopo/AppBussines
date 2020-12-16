@@ -18,10 +18,11 @@ import com.example.appbussines.Fragments.Personal.ViewPersonalFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterPosition extends RecyclerView.Adapter<AdapterPosition.ViewHolder>  {
-    List<Cargo> listCargos;
+    List<Cargo> listCargos = new ArrayList<>();
     private final LayoutInflater layoutInflater;
     private Context context;
     private onFragmentBtnSelected listener;
@@ -76,7 +77,7 @@ public class AdapterPosition extends RecyclerView.Adapter<AdapterPosition.ViewHo
         void bindData(final Cargo cargo){
             txt_code.setText(cargo.getCode());
             txt_name.setText(cargo.getName());
-            txt_state.setText(cargo.getStatus()+"");
+            txt_state.setText(cargo.getStatusLabel());
         }
    }
 

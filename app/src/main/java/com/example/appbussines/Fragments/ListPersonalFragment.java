@@ -118,7 +118,7 @@ public class ListPersonalFragment extends Fragment {
     private List<Personal> getDataBase(){
         List<Personal> per = new ArrayList<Personal>();
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("usuarios").addValueEventListener(new ValueEventListener() {
+        /*        database.getReference().child("usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -139,9 +139,11 @@ public class ListPersonalFragment extends Fragment {
 
             }
         });
-        //per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
-        //per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
-        //per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        */
+
+        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
         return per;
 
     }
