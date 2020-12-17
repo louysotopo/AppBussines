@@ -109,6 +109,7 @@ public class ListPaisesFragment extends Fragment {
         paises.add(new Pais("001","Peru",1));
         paises.add(new Pais("003","Dinamarca",0));
         paises.add(new Pais("004","Costa Rica",0));
+        paises.add(new Pais("006","Ecuador",0));
         return paises;
 
     }

@@ -119,6 +119,7 @@
                     android:layout_height="30dp"
                     android:background="@drawable/text_border_black"
                     android:ems="10"
+                    android:text="01/01/2000"
                     android:gravity="center|center_vertical"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -141,7 +142,7 @@
                     android:background="@drawable/text_border_black"
                     android:ems="10"
                     android:gravity="center"
-                    android:text="aaaa"
+                    android:text="01/01/2020"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="14sp" />

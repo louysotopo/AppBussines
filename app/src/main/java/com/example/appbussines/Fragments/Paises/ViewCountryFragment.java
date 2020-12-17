@@ -1,6 +1,8 @@
 package com.example.appbussines.Fragments.Paises;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appbussines.Entities.Pais;
+import com.example.appbussines.Fragments.ListCargosFragment;
 import com.example.appbussines.Fragments.ListPaisesFragment;
 import com.example.appbussines.Fragments.ListPersonalFragment;
 import com.example.appbussines.Fragments.Personal.EditPersonalFragment;
@@ -120,7 +124,33 @@ public class ViewCountryFragment extends Fragment {
         buttonEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onButtonSelected( new ListPaisesFragment());
+
+                //
+                // Alert dialog de eliminación
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("¿Desea eliminar el registro?")
+                        .setCancelable(false)
+                        .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // aqui actualizar
+                               // mDatabase.child("Cargo").child(cargo.getCode()).child("status").setValue(0);
+                                Toast.makeText(getActivity().getApplicationContext(),"Se eliminó el registro", Toast.LENGTH_SHORT).show();
+                                listener.onButtonSelected( new ListPaisesFragment());
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                AlertDialog titulo = builder.create();
+                titulo.setTitle("Eliminar registro");
+                titulo.show();
+
+                //
+
+
             }
         });
         buttonSalir.setOnClickListener(new View.OnClickListener() {

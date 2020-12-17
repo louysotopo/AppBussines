@@ -31,7 +31,7 @@ public class AdapterPosition extends RecyclerView.Adapter<AdapterPosition.ViewHo
         
         
         if(context  == null){
-            System.out.println(" AQUI NONKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" );
+            System.out.println(" AQUI CONTEXT NULL ********************************************" );
         }
         try{
             this.listCargos = cargosList;
@@ -44,7 +44,7 @@ public class AdapterPosition extends RecyclerView.Adapter<AdapterPosition.ViewHo
                 Log.d("AP","Implemeentar listener");
             }
         }catch(Exception e){
-            System.out.println("asdasdasdasdasdasdasdasd");
+            System.out.println(" EXCEPTION ********************************************" );
         }
 
     }

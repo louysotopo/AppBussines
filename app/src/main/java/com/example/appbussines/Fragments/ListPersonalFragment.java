@@ -141,9 +141,9 @@ public class ListPersonalFragment extends Fragment {
         });
         */
 
-        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
-        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
-        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Contratista","12/12/2020","12/12/2020","Peru","30","activo"));
+        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Auxiliar","12/12/2020","12/12/2020","Peru","30",2));
+        //per.add( new Personal("1","Maria","Cardenas","mcardenas@gmail.com","Gerente","12/12/2020","12/12/2020","Peru","25","activo"));
+        //per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Secretaria","12/12/2020","12/12/2020","Peru","36","activo"));
         return per;
 
     }

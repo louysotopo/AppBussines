@@ -1,5 +1,8 @@
 package com.example.appbussines.Entities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Personal {
     private String id;
     private String firstname;
@@ -10,10 +13,10 @@ public class Personal {
     private String birthdate;
     private String country;
     private String age;
-    private String state;
+    private int status; // 0,1,2 eliminado, activo, inactivo
     public Personal(){
     }
-    public Personal(String id, String firstname, String lastname, String email, String position, String incomingdate, String birthdate, String country, String age, String state) {
+    public Personal(String id, String firstname, String lastname, String email, String position, String incomingdate, String birthdate, String country, String age, int state) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -23,7 +26,7 @@ public class Personal {
         this.birthdate = birthdate;
         this.country = country;
         this.age = age;
-        this.state = state;
+        this.status = state;
     }
 
     public String getId() {
@@ -98,11 +101,38 @@ public class Personal {
         this.age = age;
     }
 
-    public String getState() {
-        return state;
+    public int getState() {
+        return status;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setState(int state) {
+        this.status = state;
+    }
+
+    public String getStatusLabel(){
+        String result ="";
+        switch (this.status){
+            case 0: result = "Eliminado"; break;
+            case 1: result = "Activo"; break;
+            case 2: result = "Inactivo"; break;
+            default:
+                result = "No consignado";
+        }
+        return  result;
+    }
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id ", id );
+        result.put("firstname ", firstname );
+        result.put("lastname ", lastname );
+        result.put("email ", email );
+        result.put("position ", position );
+        result.put("incomingdate ", incomingdate );
+        result.put("birthdate ", birthdate );
+        result.put("country ", country );
+        result.put("age ", age );
+        result.put("status ", status );
+
+        return result;
     }
 }

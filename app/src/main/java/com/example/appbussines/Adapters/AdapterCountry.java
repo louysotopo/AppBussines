@@ -22,11 +22,15 @@ import java.util.List;
 
 public class AdapterCountry extends  RecyclerView.Adapter<AdapterCountry.ViewHolder>{
     List<Pais> listPaises;
-    private final LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater;
     private Context context;
     private onFragmentBtnSelected listener;
 
     public  AdapterCountry (List<Pais> listPaises, Context context){
+        if(context  == null){
+            System.out.println(" AQUI CONTEXT NULL ********************************************" );
+        }
+        try{
         this.listPaises = listPaises;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -35,6 +39,9 @@ public class AdapterCountry extends  RecyclerView.Adapter<AdapterCountry.ViewHol
         }
         else{
             Log.d("AC","Implemeentar listener");
+        }
+        }catch(Exception e){
+            System.out.println(" EXCEPTION ********************************************" );
         }
     }
 

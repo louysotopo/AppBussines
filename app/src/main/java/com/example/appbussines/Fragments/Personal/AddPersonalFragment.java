@@ -11,46 +11,45 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appbussines.Entities.Personal;
 import com.example.appbussines.Fragments.ListPersonalFragment;
+import com.example.appbussines.Interfaces.Validaciones;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
-import com.example.appbussines.MainActivity;
 import com.example.appbussines.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
+import java.util.Objects;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddPersonalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class AddPersonalFragment extends Fragment {
+    // [START declare_database_ref]
+    private DatabaseReference mDatabase;
+    // [END declare_database_ref]
+    Validaciones objValidar; //objeto de nuestro clase Validaciones
 
-    private FirebaseDatabase database;
-
-    private TextView nombre;
-    private TextView apellido;
-    private TextView correo;
-    private TextView ingreso;
-    private TextView nacimiento;
-    private TextView edad;
+    // datos
+   //private EditText _id;
+    private EditText _firstname;
+    private EditText _lastname;
+    private EditText _email;
+    private EditText _age;
 
     //transacciones
     private View view;
@@ -107,6 +106,11 @@ public class AddPersonalFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // [START initialize_database_ref]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // [END initialize_database_ref]
+        // validaciones
+        objValidar = new Validaciones();
     }
 
     @Override
@@ -118,15 +122,7 @@ public class AddPersonalFragment extends Fragment {
         initDates();
         initEditText();
         initButtons();
-
-        database=FirebaseDatabase.getInstance();
-        nombre = (TextView) view.findViewById(R.id.editText_TextPersonName);
-        apellido = (TextView) view.findViewById(R.id.editText_TextPersonLastname);
-        correo = (TextView) view.findViewById(R.id.editText_TextPersonEmail);
-        ingreso = (TextView) view.findViewById(R.id.editText_TextPersonDateIncome);
-        nacimiento = (TextView) view.findViewById(R.id.editText_TextPersonDateBirthday);
-        edad = (TextView) view.findViewById(R.id.editText_TextPersonAge);
-
+        //database=FirebaseDatabase.getInstance();
         return view;
 
     }
@@ -174,6 +170,7 @@ public class AddPersonalFragment extends Fragment {
                         getActivity(), R.style.DialogThemeCalendar, dateSetListener, year, month, day);
 
                 dialog.show();
+
             }
         });
 
@@ -220,22 +217,11 @@ public class AddPersonalFragment extends Fragment {
                 Log.d("APF",countrySelected);
                 Log.d("APF",positionSelected);
                 Log.d("APF",stateSelected+"");
-                //listener.onButtonSelected( new ListPersonalFragment());
 
-                Map<String,Object> map=new HashMap<>();
-                map.put("codigo",1);
-                map.put("nombre",nombre.getText().toString());
-                map.put("apellido",apellido.getText().toString());
-                map.put("correo",correo.getText().toString());
-                map.put("position",positionSelected);
-                map.put("ingreso",ingreso.getText().toString());
-                map.put("nacimiento",nacimiento.getText().toString());
-                map.put("pais",countrySelected);
-                map.put("edad",edad.getText().toString());
-                map.put("estado",stateSelected);
-
-                database.getReference().child("usuarios").push().setValue(map);
+                if(registrarPersonal())
                 listener.onButtonSelected( new ListPersonalFragment());
+
+
             }
         });
 
@@ -251,6 +237,18 @@ public class AddPersonalFragment extends Fragment {
 
     private  void initEditText(){
         switchMaterialstate = view.findViewById(R.id.switch_add_personal);
+        switchMaterialstate.setChecked(true); // por defecto, Activo = 1, Inactivo =2
+
+        // datos que falta capturar
+        _firstname  = view.findViewById(R.id.editText_TextPersonName);
+        System.out.println(" AQAUI **************************"+_firstname.getText().toString());
+        _lastname = view.findViewById(R.id.editText_TextPersonLastname);
+        System.out.println(" AQAUI **************************"+_lastname.getText().toString());
+        _age = view.findViewById(R.id.editText_TextPersonAge);
+        System.out.println(" AQAUI **************************"+_age.getText().toString());
+        _email = view.findViewById(R.id.editText_TextPersonEmail);
+        System.out.println(" AQAUI **************************"+_age.getText().toString());
+
     }
 
     //  LLAMAR A LA BASE DE DATOS
@@ -272,6 +270,52 @@ public class AddPersonalFragment extends Fragment {
         countries.add("Colombia");
         countries.add("Brazil");
         return countries;
+    }
+
+    private boolean registrarPersonal(){
+         boolean sw = false; int cod=0;
+        String id = "";
+        String firstname = "";
+        String lastname = "";
+        String email = "";
+        String position = "";
+        String incomingdate = "00/00/0000";
+        String birthdate = "00/00/0000";
+        String country = "";
+        String age = "";
+        int status = 1000;
+        if(!objValidar.Vacio(_firstname) && !objValidar.Vacio(_lastname) && !objValidar.Vacio(_email)  ) {
+
+            firstname = _firstname.getText().toString();
+            lastname = _lastname.getText().toString();
+            email = _email.getText().toString();
+            position = positionSelected;
+            incomingdate = editTextDateincome.getText().toString();
+            birthdate = editTextDateBirthday.getText().toString();
+            country = countrySelected;
+            age = _age.getText().toString();
+            sw = switchMaterialstate.isChecked();
+
+            // evaluando estado
+            if (sw) status = 1; // activo
+            else status = 2;    // inactivo
+
+            // generando codigo de trabajador
+            cod = ((int) Math.random())+100;
+            id = firstname.substring(0,2) + lastname.substring(0,2) +cod ;
+
+            addPersonal(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);
+            return true;
+
+        }else{
+            Toast.makeText(getActivity().getApplicationContext(),"Ingrese valores", Toast.LENGTH_SHORT).show();
+           return false; }
+    }
+    private void addPersonal(String id, String firstname, String lastname, String email, String position, String incomingdate, String birthdate, String country, String age, int status)  {
+        Personal personal = new Personal(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);
+        mDatabase.child("Personal").child(id).setValue(personal);
+        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(),"El Personal: "+ id +" a sido agregado", Toast.LENGTH_SHORT).show();
+
     }
 
 

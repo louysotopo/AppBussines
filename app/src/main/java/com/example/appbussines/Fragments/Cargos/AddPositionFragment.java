@@ -33,6 +33,7 @@ public class AddPositionFragment extends Fragment {
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
     // [END declare_database_ref]
+    Validaciones objValidar; //objeto de nuestro clase Validaciones
 
     //transacciones
     private View view;
@@ -46,7 +47,6 @@ public class AddPositionFragment extends Fragment {
     private EditText txtCode;
     private EditText txtName;
     private SwitchMaterial swStatus;
-    Validaciones objValidar; //objeto de nuestro clase Validaciones
 
     //ignorar
     private static final String ARG_PARAM1 = "param1";

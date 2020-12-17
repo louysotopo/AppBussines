@@ -21,11 +21,15 @@ import java.util.List;
 
 public class AdapterPersonal  extends  RecyclerView.Adapter<AdapterPersonal.ViewHolder> {
     private List<Personal> personalList;
-    private final LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater;
     private Context context;
     private onFragmentBtnSelected listener;
 
     public AdapterPersonal( List<Personal> personalList, Context context){
+        if(context  == null){
+            System.out.println(" AQUI CONTEXT NULL ********************************************" );
+        }
+        try{
         this.personalList = personalList;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -34,6 +38,9 @@ public class AdapterPersonal  extends  RecyclerView.Adapter<AdapterPersonal.View
         }
         else{
             Log.d("LPF","Implemeentar listener");
+        }
+        }catch(Exception e){
+            System.out.println(" EXCEPTION ********************************************" );
         }
     }
     @NonNull
@@ -78,7 +85,7 @@ public class AdapterPersonal  extends  RecyclerView.Adapter<AdapterPersonal.View
             txt_lastname.setText(personal.getLastname());
             txt_position.setText(personal.getPosition());
             txt_dni.setText(personal.getId());
-            txt_state.setText(personal.getState());
+            txt_state.setText(personal.getStatusLabel());
         }
 
     }
