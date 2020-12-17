@@ -1,6 +1,7 @@
 package com.example.appbussines.Adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,12 @@ import com.example.appbussines.Fragments.Personal.ViewPersonalFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdapterPersonal  extends  RecyclerView.Adapter<AdapterPersonal.ViewHolder> {
+    private List<Personal> originalpersonalList;
     private List<Personal> personalList;
     private LayoutInflater layoutInflater;
     private Context context;
@@ -31,6 +35,8 @@ public class AdapterPersonal  extends  RecyclerView.Adapter<AdapterPersonal.View
         }
         try{
         this.personalList = personalList;
+        this.originalpersonalList = new ArrayList<>();
+        this.originalpersonalList.addAll(personalList);
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         if( context instanceof  onFragmentBtnSelected ){
@@ -66,6 +72,29 @@ public class AdapterPersonal  extends  RecyclerView.Adapter<AdapterPersonal.View
         return this.personalList.size();
     }
 
+    public void filter(String strSearch){
+        if(strSearch.length()==0){
+            personalList.clear();
+            personalList.addAll(originalpersonalList);
+        }else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                personalList.clear();
+                List<Personal> collect = originalpersonalList.stream()
+                        .filter( i -> i.getFirstname().toLowerCase().contains(strSearch) )
+                        .collect(Collectors.toList()) ;
+                personalList.addAll(collect);
+            }
+            else{
+                personalList.clear();
+                for(Personal i: originalpersonalList){
+                    if (i.getFirstname().toLowerCase().contains(strSearch))
+                        personalList.add(i);
+                }
+
+            }
+        }
+        notifyDataSetChanged();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txt_lastname;
         TextView txt_position;

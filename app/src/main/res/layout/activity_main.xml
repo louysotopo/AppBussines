@@ -26,7 +26,7 @@
         android:layout_width="139dp"
         android:layout_height="126dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/ic_round_account_circle_24"
+        android:background="@drawable/ic_engineering_black_18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -90,7 +90,7 @@
 
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:srcCompat="@drawable/ic_round_account_circle_black_40" />
+                app:srcCompat="@drawable/ic_baseline_lock_open_24" />
 
             <EditText
                 android:id="@+id/editText_login_user_password"
