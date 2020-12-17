@@ -58,6 +58,7 @@ public class ListPersonalFragment extends Fragment {
     private onFragmentBtnSelected listener;
     private FirebaseDatabase database;
 
+
     public ListPersonalFragment() {}
 
     public static ListPersonalFragment newInstance(String param1, String param2) {
@@ -108,6 +109,7 @@ public class ListPersonalFragment extends Fragment {
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
         getDataBase(); // asignar al personallist la lista de personal que se obtenga de la base de datos :v
 
+        searchView = view.findViewById(R.id.SearchPersonal);
         // boton para añadir  personal
         floatingActionButton = view.findViewById(R.id.floatingActionButton_add_personal);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +119,7 @@ public class ListPersonalFragment extends Fragment {
                 //Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
-
+        initSearch();
 
 
 
@@ -186,5 +188,18 @@ public class ListPersonalFragment extends Fragment {
         per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Secretaria","12/12/2020","12/12/2020","Peru","36",1));
         return per;
 
+    }
+    private  void initSearch(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapterPersonal.filter(newText);
+                return false;
+            }
+        });
     }
 }
