@@ -12,13 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.appbussines.Entities.Cargo;
 import com.example.appbussines.Entities.Pais;
 import com.example.appbussines.Fragments.Paises.ViewCountryFragment;
+import com.example.appbussines.Interfaces.Validaciones;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
+import com.example.appbussines.MainActivity;
 import com.example.appbussines.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +34,10 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
  * create an instance of this fragment.
  */
 public class EditPositionFragment extends Fragment {
+    // [START declare_database_ref]
+    private DatabaseReference mDatabase;
+    // [END declare_database_ref]
+
     //transacciones
     private View view;
     private onFragmentBtnSelected listener;
@@ -39,6 +51,8 @@ public class EditPositionFragment extends Fragment {
     //botones
     private Button buttonAceptar;
     private Button buttonCancelar;
+
+    Validaciones objValidar; //objeto de nuestro clase Validaciones
 
     //ignorar
     private static final String ARG_PARAM1 = "param1";
@@ -68,6 +82,11 @@ public class EditPositionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // [START initialize_database_ref]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // [END initialize_database_ref]
+        // validaciones
+        objValidar = new Validaciones();
     }
     @Override
     public void onAttach(@NonNull Context context) {
@@ -105,6 +124,7 @@ public class EditPositionFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if( actualizarCargo())
                 listener.onButtonSelected( new ViewPositionFragment(cargo));
             }
         });
@@ -116,10 +136,51 @@ public class EditPositionFragment extends Fragment {
             }
         });
 
-    }private void setData(){
+    }
+    private void setData(){
         if(cargo != null){
             editTextCode.setText(cargo.getCode());
             editTextNombre.setText(cargo.getName());
+            boolean sw = false;
+            switch (cargo.getStatus()) {
+                case 1:   sw = true ; break;
+                case 2:   sw = false; break;
+                default:
+            }
+            switchMaterialstate.setChecked(sw);
+
         }
     }
+    private boolean actualizarCargo(){
+        String co="", nm=""; boolean sw = false; int status = 1000;
+
+        if(!objValidar.Vacio(editTextCode) && !objValidar.Vacio(editTextNombre)) {
+            co = editTextCode.getText().toString();
+            nm = editTextNombre.getText().toString();
+            sw = switchMaterialstate.isChecked();
+
+            if (sw) status = 1; // activo
+            else status = 2;    // inactivo
+
+            updateCargo(co, nm, status);
+            listener.onButtonSelected( new ViewPositionFragment(cargo));
+
+            return true;
+
+        }else{
+            Toast.makeText(getActivity().getApplicationContext(),"Ingrese valores", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    private void updateCargo(String code, String name, int status) {
+        cargo = new Cargo(code, name, status);
+        Map<String, Object> cargoMap = cargo.toMap();
+        try {
+            mDatabase.child("Cargo").child(code).updateChildren(cargoMap);
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(),"El Cargo "+ code+" a sido actualizado", Toast.LENGTH_SHORT).show();
+        }catch (Exception e ) {}
+
+    }
+
+
 }

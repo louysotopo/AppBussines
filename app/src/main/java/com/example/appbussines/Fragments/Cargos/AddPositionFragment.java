@@ -26,6 +26,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class AddPositionFragment extends Fragment {
 
     // [START declare_database_ref]
@@ -155,7 +157,7 @@ private boolean registrarCargo(){
     private void addCargo(String code, String name, int status) {
         Cargo cargo = new Cargo(code, name, status);
         mDatabase.child("Cargo").child(code).setValue(cargo);
-        Toast.makeText(getActivity().getApplicationContext(),"El Cargo de: "+ name +" a sido agregado", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(),"El Cargo de: "+ name +" a sido agregado", Toast.LENGTH_SHORT).show();
 
     }
 

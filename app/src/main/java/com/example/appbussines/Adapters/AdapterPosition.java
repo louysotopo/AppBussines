@@ -23,20 +23,30 @@ import java.util.List;
 
 public class AdapterPosition extends RecyclerView.Adapter<AdapterPosition.ViewHolder>  {
     List<Cargo> listCargos = new ArrayList<>();
-    private final LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater;
     private Context context;
     private onFragmentBtnSelected listener;
 
     public AdapterPosition( List<Cargo> cargosList, Context context){
-        this.listCargos = cargosList;
-        this.context = context;
-        this.layoutInflater = LayoutInflater.from(context);
-        if( context instanceof  onFragmentBtnSelected ){
-            listener= (onFragmentBtnSelected) context;
+        
+        
+        if(context  == null){
+            System.out.println(" AQUI NONKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" );
         }
-        else{
-            Log.d("AP","Implemeentar listener");
+        try{
+            this.listCargos = cargosList;
+            this.context = context;
+            this.layoutInflater = LayoutInflater.from(context);
+            if( context instanceof  onFragmentBtnSelected ){
+                listener= (onFragmentBtnSelected) context;
+            }
+            else{
+                Log.d("AP","Implemeentar listener");
+            }
+        }catch(Exception e){
+            System.out.println("asdasdasdasdasdasdasdasd");
         }
+
     }
 
     @NonNull

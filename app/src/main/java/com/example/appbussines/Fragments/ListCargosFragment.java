@@ -41,6 +41,7 @@ public class ListCargosFragment extends Fragment {
     private DatabaseReference mDatabase;
     // [END declare_database_ref]
 
+
     //transacciones
     private onFragmentBtnSelected listener;
     private View view;
@@ -131,13 +132,6 @@ public class ListCargosFragment extends Fragment {
             }
         });
 
-        /* List<Cargo> cargos = new ArrayList<>();
-        cargos.add( new Cargo("001","Contratista",1));
-        cargos.add( new Cargo("002","SuperIntendente",0));
-        cargos.add( new Cargo("003","Secretario",1));
-        */
-
-       // return cargos;
 
     }
     private void  initButton(){
