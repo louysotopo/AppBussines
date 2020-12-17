@@ -131,7 +131,8 @@ public class Personal {
         result.put("birthdate ", birthdate );
         result.put("country ", country );
         result.put("age ", age );
-        result.put("status ", status );
+        result.put("state ", status );
+        result.put("statusLabel ", getStatusLabel() );
 
         return result;
     }

@@ -37,6 +37,7 @@ public class EditPositionFragment extends Fragment {
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
     // [END declare_database_ref]
+    Validaciones objValidar; //objeto de nuestro clase Validaciones
 
     //transacciones
     private View view;
@@ -51,8 +52,6 @@ public class EditPositionFragment extends Fragment {
     //botones
     private Button buttonAceptar;
     private Button buttonCancelar;
-
-    Validaciones objValidar; //objeto de nuestro clase Validaciones
 
     //ignorar
     private static final String ARG_PARAM1 = "param1";
@@ -163,7 +162,6 @@ public class EditPositionFragment extends Fragment {
             else status = 2;    // inactivo
 
             updateCargo(co, nm, status);
-            listener.onButtonSelected( new ViewPositionFragment(cargo));
 
             return true;
 

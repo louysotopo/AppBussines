@@ -19,14 +19,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appbussines.Adapters.AdapterPosition;
+import com.example.appbussines.Entities.Cargo;
 import com.example.appbussines.Entities.Personal;
 import com.example.appbussines.Fragments.ListPersonalFragment;
 import com.example.appbussines.Interfaces.Validaciones;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -142,19 +147,69 @@ public class AddPersonalFragment extends Fragment {
     private void initPositions(){
         //campos
         //spinner de cargos
-        listPositions = getListPositions();
-        spinnerPositions = view.findViewById(R.id.spinnerPosition_add_personal);
-        arrayAdapterPositions= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listPositions);
-        arrayAdapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPositions.setAdapter(arrayAdapterPositions);
+        //listPositions = getListPositions();
+        //
+        listPositions = new ArrayList<>();
+        mDatabase.child("Cargo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        String name;
+                        int status = Integer.parseInt(ds.child("status").getValue().toString());
+                        if(status==1){
+                            name = ds.child("name").getValue().toString();
+                        listPositions.add(name);
+                        }
+                    }
+                    spinnerPositions = view.findViewById(R.id.spinnerPosition_add_personal);
+                    arrayAdapterPositions= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listPositions);
+                    arrayAdapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerPositions.setAdapter(arrayAdapterPositions);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //
+
+
     }
     private void  initCountries(){
+
+        //
+        listCountries= new ArrayList<>();
+        mDatabase.child("Pais").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        String name;
+                        int status = Integer.parseInt(ds.child("status").getValue().toString());
+                        if(status==1){
+                            name = ds.child("name").getValue().toString();
+                            listCountries.add(name);
+                        }
+                    }
+                    spinnerCountries= view.findViewById(R.id.spinnerCountries_add_personal);
+                    arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listCountries);
+                    arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerCountries.setAdapter(arrayAdapterCountries);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //
         //spinner paises
-        listCountries = getListCountries();
-        spinnerCountries= view.findViewById(R.id.spinnerCountries_add_personal);
-        arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listCountries);
-        arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCountries.setAdapter(arrayAdapterCountries);
+
+
     }
     private void initDates(){
         editTextDateBirthday = view.findViewById(R.id.editText_TextPersonDateBirthday);
@@ -301,8 +356,8 @@ public class AddPersonalFragment extends Fragment {
             else status = 2;    // inactivo
 
             // generando codigo de trabajador
-            cod = ((int) Math.random())+100;
-            id = firstname.substring(0,2) + lastname.substring(0,2) +cod ;
+            cod = ((int) (Math.random() * 100) + 1)*100 + ((int) (Math.random() * 100) + 1)*10+((int) (Math.random() * 100) + 1);
+            id = firstname.substring(0,2).toUpperCase() + lastname.substring(0,2).toUpperCase() +cod ;
 
             addPersonal(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);
             return true;
@@ -313,6 +368,7 @@ public class AddPersonalFragment extends Fragment {
     }
     private void addPersonal(String id, String firstname, String lastname, String email, String position, String incomingdate, String birthdate, String country, String age, int status)  {
         Personal personal = new Personal(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);
+
         mDatabase.child("Personal").child(id).setValue(personal);
         Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(),"El Personal: "+ id +" a sido agregado", Toast.LENGTH_SHORT).show();
 

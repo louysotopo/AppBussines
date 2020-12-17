@@ -24,6 +24,8 @@ import com.example.appbussines.Fragments.Personal.EditPersonalFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +33,9 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
  * create an instance of this fragment.
  */
 public class ViewCountryFragment extends Fragment {
+    // [START declare_database_ref]
+    private DatabaseReference mDatabase;
+    // [END declare_database_ref]
     //transacciones
     private View view;
     private onFragmentBtnSelected listener;
@@ -45,10 +50,6 @@ public class ViewCountryFragment extends Fragment {
     private Button buttonModificar;
     private Button buttonEliminar;
     private Button buttonSalir;
-
-
-
-
 
     //ignorar
     private static final String ARG_PARAM1 = "param1";
@@ -89,6 +90,9 @@ public class ViewCountryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // [START initialize_database_ref]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // [END initialize_database_ref]
     }
 
     @Override
@@ -133,7 +137,7 @@ public class ViewCountryFragment extends Fragment {
                         .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // aqui actualizar
-                               // mDatabase.child("Cargo").child(cargo.getCode()).child("status").setValue(0);
+                                mDatabase.child("Pais").child(pais.getCode()).child("status").setValue(0);
                                 Toast.makeText(getActivity().getApplicationContext(),"Se eliminó el registro", Toast.LENGTH_SHORT).show();
                                 listener.onButtonSelected( new ListPaisesFragment());
                             }
@@ -164,6 +168,13 @@ public class ViewCountryFragment extends Fragment {
         if(this.pais != null){
             textViewCode.setText(pais.getCode());
             textViewName.setText(pais.getName());
+            boolean sw = false;
+            switch (pais.getStatus()) {
+                case 1:   sw = true ; break;
+                case 2:   sw = false; break;
+                default:
+            }
+            switchStatus.setChecked(sw);
         }
     }
 

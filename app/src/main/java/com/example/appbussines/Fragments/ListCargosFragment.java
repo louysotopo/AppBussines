@@ -131,8 +131,6 @@ public class ListCargosFragment extends Fragment {
 
             }
         });
-
-
     }
     private void  initButton(){
         floatingActionButton = view.findViewById(R.id.floatingActionButton_add_cargo);

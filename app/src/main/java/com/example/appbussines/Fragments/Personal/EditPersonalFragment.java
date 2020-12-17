@@ -17,16 +17,23 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.appbussines.Entities.Pais;
 import com.example.appbussines.Entities.Personal;
 import com.example.appbussines.Fragments.ListPersonalFragment;
+import com.example.appbussines.Interfaces.Validaciones;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +41,11 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class EditPersonalFragment extends Fragment {
+    // [START declare_database_ref]
+    private DatabaseReference mDatabase;
+    // [END declare_database_ref]
+    Validaciones objValidar; //objeto de nuestro clase Validaciones
+
     //transacciones
     private View view;
     private onFragmentBtnSelected listener;
@@ -99,6 +111,11 @@ public class EditPersonalFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // [START initialize_database_ref]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // [END initialize_database_ref]
+        // validaciones
+        objValidar = new Validaciones();
     }
     @Override
     public void onAttach(@NonNull Context context) {
@@ -221,6 +238,7 @@ public class EditPersonalFragment extends Fragment {
                 Log.d("APF",countrySelected);
                 Log.d("APF",positionSelected);
                 Log.d("APF",stateSelected+"");
+              //  if(actualizarPersonal())
                 listener.onButtonSelected( new ViewPersonalFragment(personal));
             }
         });
@@ -240,8 +258,18 @@ public class EditPersonalFragment extends Fragment {
             textEditAge.setText(personal.getAge());
             editTextDateBirthday.setText(personal.getBirthdate());
             editTextDateincome.setText(personal.getIncomingdate());
-
+            //spinnerPositions
             //añadir los demas, os spinner y el swithc no me acuerdo :v
+
+            boolean sw = false;
+            switch (personal.getState()) {
+                case 1:   sw = true ; break;
+                case 2:   sw = false; break;
+                default:
+            }
+            switchMaterialstate.setChecked(sw);
+
+
 
         }
 
@@ -263,6 +291,48 @@ public class EditPersonalFragment extends Fragment {
         countries.add("Colombia");
         countries.add("Brazil");
         return countries;
+    }
+
+    private boolean actualizarPersonal(){
+        String id=""; boolean sw = false; int status = 1000, cod=0;
+
+        if(!objValidar.Vacio(textEditFirstName) && !objValidar.Vacio(textEditLastName) && !objValidar.Vacio(textEditEmail)  ) {
+            //
+            String firstname = textEditFirstName.getText().toString();
+            String lastname = textEditLastName.getText().toString();
+            String email = textEditEmail.getText().toString();
+            String position = positionSelected;
+            String incomingdate = editTextDateincome.getText().toString();
+            String birthdate = editTextDateBirthday.getText().toString();
+            String country = countrySelected;
+            String age = textEditAge.getText().toString();
+            sw = switchMaterialstate.isChecked();
+            // evaluando estado
+            if (sw) status = 1; // activo
+            else status = 2;    // inactivo
+
+            // generando codigo de trabajador
+           cod = ((int) (Math.random() * 100) + 1)*100 + ((int) (Math.random() * 100) + 1)*10+((int) (Math.random() * 100) + 1);
+           id = firstname.substring(0,2).toUpperCase() + lastname.substring(0,2).toUpperCase() +cod ;
+
+            updatePerson(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);;
+
+            return true;
+
+        }else{
+            Toast.makeText(getActivity().getApplicationContext(),"Ingrese valores", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    private void updatePerson(String id, String firstname, String lastname, String email, String position, String incomingdate, String birthdate, String country, String age, int status)  {
+        personal = new Personal(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);
+        Map<String, Object> personalMap = personal.toMap();
+        try {
+            mDatabase.child("Personal").child(id).setValue(personalMap);
+            // mDatabase.child("Personal").child(id).updateChildren(personalMap);
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(),"El Pais "+ id+" a sido actualizado", Toast.LENGTH_SHORT).show();
+        }catch (Exception e ) {}
+
     }
 
 

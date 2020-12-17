@@ -22,6 +22,11 @@ import com.example.appbussines.Fragments.Personal.AddPersonalFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +37,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ListPaisesFragment extends Fragment {
+    // [START declare_database_ref]
+    private DatabaseReference mDatabase;
+    // [END declare_database_ref]
+
     //transations
     private View view;
     private onFragmentBtnSelected listener;
@@ -67,6 +76,9 @@ public class ListPaisesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // [START initialize_database_ref]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // [END initialize_database_ref]
     }
     @Override
     public void onAttach(@NonNull Context context) {
@@ -91,9 +103,7 @@ public class ListPaisesFragment extends Fragment {
     private void initList(){
         recyclerView = view.findViewById(R.id.recyclerCountries);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
-        paisList =  getDataBase(); // asignar al personallist la lista de personal que se obtenga de la base de datos :v
-        adapterCountry = new AdapterCountry(paisList, getContext());
-        recyclerView.setAdapter(adapterCountry);
+        getDataBase(); // asignar al personallist la lista de personal que se obtenga de la base de datos :v
 
         floatingActionButton = view.findViewById(R.id.floatingActionButton_add_pais);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +114,7 @@ public class ListPaisesFragment extends Fragment {
             }
         });
     }
+    /*
     private  List<Pais> getDataBase(){
         List<Pais> paises = new ArrayList<>();
         paises.add(new Pais("001","Peru",1));
@@ -111,6 +122,35 @@ public class ListPaisesFragment extends Fragment {
         paises.add(new Pais("004","Costa Rica",0));
         paises.add(new Pais("006","Ecuador",0));
         return paises;
+
+    }
+    */
+
+    private void getDataBase(){
+        paisList = new ArrayList<>();
+        mDatabase.child("Pais").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        String code = ds.child("code").getValue().toString();
+                        String name = ds.child("name").getValue().toString();
+                        int status = Integer.parseInt(ds.child("status").getValue().toString());
+
+                        System.out.println((new Pais(code,name,status)).toString());
+                        paisList.add(new Pais(code,name,status));
+                    }
+                    adapterCountry = new AdapterCountry(paisList, getContext());
+                    recyclerView.setAdapter(adapterCountry);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 }
