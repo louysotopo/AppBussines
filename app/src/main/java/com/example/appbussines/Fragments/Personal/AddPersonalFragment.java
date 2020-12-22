@@ -306,26 +306,6 @@ public class AddPersonalFragment extends Fragment {
 
     }
 
-    //  LLAMAR A LA BASE DE DATOS
-    private List<String> getListPositions(){
-        //  LLAMAR A LA BASE DE DATOS
-        //
-        List<String> positions = new ArrayList<>();
-        positions.add("Consultor");
-        positions.add("Personal");
-        positions.add("Asistente");
-        positions.add("Director");
-        return positions;
-    }
-    private List<String> getListCountries(){
-        //  LLAMAR A LA BASE DE DATOS
-        List<String> countries = new ArrayList<>();
-        countries.add("Peru");
-        countries.add("Chile");
-        countries.add("Colombia");
-        countries.add("Brazil");
-        return countries;
-    }
 
     private boolean registrarPersonal(){
          boolean sw = false; int cod=0;

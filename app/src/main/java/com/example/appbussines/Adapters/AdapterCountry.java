@@ -84,7 +84,7 @@ public class AdapterCountry extends  RecyclerView.Adapter<AdapterCountry.ViewHol
         void bindData(final Pais pais){
             txt_code.setText(pais.getCode());
             txt_name.setText(pais.getName());
-            txt_state.setText(pais.getStatus()+"");
+            txt_state.setText(pais.getStatusLabel());
         }
 
     }

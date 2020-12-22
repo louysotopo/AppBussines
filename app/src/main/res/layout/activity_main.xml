@@ -6,20 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/button_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/app_name"
-        android:textColor="@color/black"
-        android:textSize="23sp"
-        android:textStyle="bold"
+
+        android:layout_marginTop="16dp"
+        android:background="#3E7E2C2C"
+        android:text="Registrate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -31,19 +29,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@color/accent"
-        android:textSize="2sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
-
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -56,13 +43,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText_login_user_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/text_rounded"
+                android:elevation="6dp"
+                android:ems="10"
+                android:hint="contraseña"
+                android:inputType="textPassword"
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
             <ImageView
 
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_round_account_circle_black_40" />
+                app:srcCompat="@drawable/ic_baseline_lock_open_24" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editText_login_user_name"
@@ -78,36 +88,13 @@
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
 
             <ImageView
 
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:srcCompat="@drawable/ic_baseline_lock_open_24" />
-
-            <EditText
-                android:id="@+id/editText_login_user_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:hint="contraseña"
-                android:background="@drawable/text_rounded"
-                android:elevation="6dp"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:textAlignment="center"
-                android:textSize="18sp" />
+                android:background="@drawable/ic_round_account_circle_black_40" />
         </LinearLayout>
-
 
         <Button
             android:id="@+id/button_login"
@@ -124,14 +111,31 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_register"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:background="#00FFFFFF"
-        android:text="Registrate"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/inicio"
+        android:textColor="@color/black"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/accent"
+        android:textSize="2sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

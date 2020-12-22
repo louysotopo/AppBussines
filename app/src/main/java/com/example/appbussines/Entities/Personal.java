@@ -122,17 +122,17 @@ public class Personal {
     }
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id ", id );
-        result.put("firstname ", firstname );
-        result.put("lastname ", lastname );
-        result.put("email ", email );
-        result.put("position ", position );
-        result.put("incomingdate ", incomingdate );
-        result.put("birthdate ", birthdate );
-        result.put("country ", country );
-        result.put("age ", age );
-        result.put("state ", status );
-        result.put("statusLabel ", getStatusLabel() );
+        result.put("id", id );
+        result.put("firstname", firstname );
+        result.put("lastname", lastname );
+        result.put("email", email );
+        result.put("position", position );
+        result.put("incomingdate", incomingdate );
+        result.put("birthdate", birthdate );
+        result.put("country", country );
+        result.put("age", age );
+        result.put("state", status );
+        result.put("statusLabel", getStatusLabel() );
 
         return result;
     }

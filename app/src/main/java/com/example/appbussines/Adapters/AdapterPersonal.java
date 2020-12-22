@@ -1,5 +1,6 @@
 package com.example.appbussines.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -110,8 +111,9 @@ public class AdapterPersonal  extends  RecyclerView.Adapter<AdapterPersonal.View
             linearLayout =itemView.findViewById(R.id.item_persona_layout);
 
         }
+        @SuppressLint("SetTextI18n")
         void bindData(final Personal personal){
-            txt_lastname.setText(personal.getLastname());
+            txt_lastname.setText(personal.getFirstname() + " "+personal.getLastname());
             txt_position.setText(personal.getPosition());
             txt_dni.setText(personal.getId());
             txt_state.setText(personal.getStatusLabel());

@@ -26,10 +26,14 @@ import com.example.appbussines.Interfaces.Validaciones;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.example.appbussines.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +56,7 @@ public class EditPersonalFragment extends Fragment {
     private Personal personal;
 
     // wigets y campos de texto
+    private TextView textViewId;
     private EditText textEditFirstName;
     private EditText textEditLastName;
     private EditText textEditEmail;
@@ -146,6 +151,7 @@ public class EditPersonalFragment extends Fragment {
 
     private void initComponentes(){
         //EditText
+        textViewId = view.findViewById(R.id.textView_EditPerson_id);
         textEditFirstName = view.findViewById(R.id.editText_EditPerson_firstName);
         textEditLastName = view.findViewById(R.id.editText_editperson_Lastname);
         textEditEmail =  view.findViewById(R.id.editText_editperson_Email);
@@ -168,18 +174,75 @@ public class EditPersonalFragment extends Fragment {
     }
     private void initPositions(){
         //campos
-        //spinner de cargos
-        listPositions = getListPositions();
-        arrayAdapterPositions= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listPositions);
-        arrayAdapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPositions.setAdapter(arrayAdapterPositions);
+//
+        listPositions = new ArrayList<>();
+        mDatabase.child("Cargo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        String name;
+                        int status = Integer.parseInt(ds.child("status").getValue().toString());
+                        if(status==1){
+                            name = ds.child("name").getValue().toString();
+                            listPositions.add(name);
+                        }
+                    }
+
+                    arrayAdapterPositions= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,listPositions);
+                    arrayAdapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                    spinnerPositions.setAdapter(arrayAdapterPositions);
+                    int pos2 = -1;
+                    if(listPositions.contains(personal.getPosition())){
+                        pos2 = searchInList(listPositions,personal.getPosition());
+                        spinnerPositions.setSelection(pos2);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
     private void  initCountries(){
-        //spinner paises
-        listCountries = getListCountries();
-        arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listCountries);
-        arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCountries.setAdapter(arrayAdapterCountries);
+        listCountries= new ArrayList<>();
+        mDatabase.child("Pais").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        String name;
+                        int status = Integer.parseInt(ds.child("status").getValue().toString());
+                        if(status==1){
+                            name = ds.child("name").getValue().toString();
+                            listCountries.add(name);
+                        }
+                    }
+
+                    arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,listCountries);
+                    arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                    spinnerCountries.setAdapter(arrayAdapterCountries);
+                    int pos = -1;
+                    if(listCountries.contains(personal.getCountry())){
+                        System.out.println(personal.getCountry() + " aquii iii");
+                        pos = searchInList(listCountries,personal.getCountry());
+                        System.out.println(personal.getCountry() + " pos aquiiiiiii "+ pos + " list: "+ listCountries.get(pos));
+                        spinnerCountries.setSelection(pos);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
     private void initDates(){
 
@@ -238,7 +301,7 @@ public class EditPersonalFragment extends Fragment {
                 Log.d("APF",countrySelected);
                 Log.d("APF",positionSelected);
                 Log.d("APF",stateSelected+"");
-              //  if(actualizarPersonal())
+              if(actualizarPersonal())
                 listener.onButtonSelected( new ViewPersonalFragment(personal));
             }
         });
@@ -252,14 +315,13 @@ public class EditPersonalFragment extends Fragment {
     }
     private void setData(){
         if(personal != null){
+            textViewId.setText(personal.getId());
             textEditFirstName.setText(personal.getFirstname());
             textEditLastName.setText(personal.getLastname());
             textEditEmail.setText(personal.getEmail());
             textEditAge.setText(personal.getAge());
             editTextDateBirthday.setText(personal.getBirthdate());
             editTextDateincome.setText(personal.getIncomingdate());
-            //spinnerPositions
-            //añadir los demas, os spinner y el swithc no me acuerdo :v
 
             boolean sw = false;
             switch (personal.getState()) {
@@ -269,28 +331,9 @@ public class EditPersonalFragment extends Fragment {
             }
             switchMaterialstate.setChecked(sw);
 
-
-
+            // spinner en sus inicializadores
         }
 
-    }
-    private List<String> getListPositions(){
-        //si es posible crear un sigleton para no tener que estar pidiendo muchas veces  a la base de datos la lista de posiciones
-        //
-        List<String> positions = new ArrayList<>();
-        positions.add("Consultor");
-        positions.add("Personal");
-        positions.add("Asistente");
-        positions.add("Director");
-        return positions;
-    }
-    private List<String> getListCountries(){
-        List<String> countries = new ArrayList<>();
-        countries.add("Peru");
-        countries.add("Chile");
-        countries.add("Colombia");
-        countries.add("Brazil");
-        return countries;
     }
 
     private boolean actualizarPersonal(){
@@ -298,6 +341,7 @@ public class EditPersonalFragment extends Fragment {
 
         if(!objValidar.Vacio(textEditFirstName) && !objValidar.Vacio(textEditLastName) && !objValidar.Vacio(textEditEmail)  ) {
             //
+            id = textViewId.getText().toString();
             String firstname = textEditFirstName.getText().toString();
             String lastname = textEditLastName.getText().toString();
             String email = textEditEmail.getText().toString();
@@ -310,10 +354,6 @@ public class EditPersonalFragment extends Fragment {
             // evaluando estado
             if (sw) status = 1; // activo
             else status = 2;    // inactivo
-
-            // generando codigo de trabajador
-           cod = ((int) (Math.random() * 100) + 1)*100 + ((int) (Math.random() * 100) + 1)*10+((int) (Math.random() * 100) + 1);
-           id = firstname.substring(0,2).toUpperCase() + lastname.substring(0,2).toUpperCase() +cod ;
 
             updatePerson(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);;
 
@@ -328,11 +368,19 @@ public class EditPersonalFragment extends Fragment {
         personal = new Personal(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);
         Map<String, Object> personalMap = personal.toMap();
         try {
-            mDatabase.child("Personal").child(id).setValue(personalMap);
-            // mDatabase.child("Personal").child(id).updateChildren(personalMap);
-            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(),"El Pais "+ id+" a sido actualizado", Toast.LENGTH_SHORT).show();
+           mDatabase.child("Personal").child(id).updateChildren(personalMap);
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(),"El personal "+ id+" a sido actualizado", Toast.LENGTH_SHORT).show();
         }catch (Exception e ) {}
 
+    }
+
+    public int searchInList( List<String> list, String label){
+        for (int i = 0; i<list.size();i++){
+            if(list.get(i).equals(label)){
+               return i;
+            }
+        }
+        return -1;
     }
 
 

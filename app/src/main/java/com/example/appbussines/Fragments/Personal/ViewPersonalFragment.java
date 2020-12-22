@@ -40,6 +40,7 @@ public class ViewPersonalFragment extends Fragment {
     private Personal personal;
 
     // wigets y campos de texto
+    private TextView textViewId;
     private TextView textViewFirstName;
     private TextView textViewLastName;
     private TextView textViewEmail;
@@ -119,6 +120,7 @@ public class ViewPersonalFragment extends Fragment {
         return view;
     }
     private void initComponents(){
+        textViewId = view.findViewById(R.id.textView_viewperson_id);
          textViewFirstName = view.findViewById(R.id.textView_viewperson_firstname);
          textViewLastName = view.findViewById(R.id.textView_viewperson_lastname);
          textViewEmail = view.findViewById(R.id.textView_viewperson_email);
@@ -137,6 +139,7 @@ public class ViewPersonalFragment extends Fragment {
     }
     private void setData(){
         if(personal != null){
+            textViewId.setText("ID:"+ personal.getId());
             textViewFirstName.setText(personal.getFirstname());
             textViewLastName.setText(personal.getLastname());
             textViewEmail.setText(personal.getEmail());
@@ -153,6 +156,7 @@ public class ViewPersonalFragment extends Fragment {
                 default:
             }
             switchStatus.setChecked(sw);
+
 
         }
 
