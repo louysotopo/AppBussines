@@ -100,7 +100,6 @@ public class AddPositionFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_add_position, container, false);
         initCompoenents();
         initbuttons();
-
         return view;
     }
     private void  initCompoenents(){

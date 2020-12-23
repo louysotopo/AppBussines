@@ -22,7 +22,7 @@
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingEnd="5dp"
-            android:text="Mi Cuenta"
+            android:text="Perfil"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -41,12 +41,28 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editText_user_name"
+            <TextView
+                android:id="@+id/textView_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Correo"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_user_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress"
                 android:textAlignment="textStart"
                 android:textSize="14sp" />
 
@@ -59,8 +75,8 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editText_user_password"
+            <TextView
+                android:id="@+id/textView_user_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -69,7 +85,7 @@
                 android:textSize="14sp" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switch_add_country"
+                android:id="@+id/switch_view_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -84,23 +100,23 @@
                 android:layout_marginTop="20dp">
 
                 <Button
-                    android:id="@+id/button_aceptar_user"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/button_edit_user"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="1dp"
-                    android:text="Editar"
+                    android:text="MODIFICAR"
                     android:textAlignment="center" />
 
                 <Button
-                    android:id="@+id/button_cancelar_user"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/button_logout_user"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="1dp"
-                    android:text="Salir" />
+                    android:text="SALIR" />
             </RelativeLayout>
 
 

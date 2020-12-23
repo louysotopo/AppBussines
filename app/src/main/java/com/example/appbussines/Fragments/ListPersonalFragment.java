@@ -157,38 +157,7 @@ public class ListPersonalFragment extends Fragment {
             }
         });
     }
-    private List<Personal> getDataBaseFEO(){
-        List<Personal> per = new ArrayList<Personal>();
-        database = FirebaseDatabase.getInstance();
-        /*        database.getReference().child("usuarios").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    personalList.clear();
-                    for (DataSnapshot ds: snapshot.getChildren()){
-                        String name = ds.child("nombre").getValue().toString();
 
-                        Personal p = new Personal("i",name,"n","n","n","n","n","n","n","n");
-                        personalList.add(p);
-                    }
-                    adapterPersonal = new AdapterPersonal(personalList,getContext());
-                    recyclerView.setAdapter(adapterPersonal);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        */
-
-        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Auxiliar","12/12/2020","12/12/2020","Peru","30",2));
-        per.add( new Personal("1","Maria","Cardenas","mcardenas@gmail.com","Gerente","12/12/2020","12/12/2020","Peru","25",1));
-        per.add( new Personal("1","Juan","Perez","ktorres@gmail.com","Secretaria","12/12/2020","12/12/2020","Peru","36",1));
-        return per;
-
-    }
     private  void initSearch(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

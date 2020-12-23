@@ -223,8 +223,8 @@ public class EditPersonalFragment extends Fragment {
                         }
                     }
 
-                    arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,listCountries);
-                    arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                    arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,listCountries);//.simple_spinner_dropdown_item para q no salga error cuando agrego un pais
+                    arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_item); //.simple_spinner_dropdown_item para q no salga error cuando agrego un pais
                     spinnerCountries.setAdapter(arrayAdapterCountries);
                     int pos = -1;
                     if(listCountries.contains(personal.getCountry())){
@@ -354,11 +354,8 @@ public class EditPersonalFragment extends Fragment {
             // evaluando estado
             if (sw) status = 1; // activo
             else status = 2;    // inactivo
-
             updatePerson(id,firstname,lastname,email,position,incomingdate,birthdate,country,age,status);;
-
             return true;
-
         }else{
             Toast.makeText(getActivity().getApplicationContext(),"Ingrese valores", Toast.LENGTH_SHORT).show();
             return false;

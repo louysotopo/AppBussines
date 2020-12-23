@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,9 +23,12 @@ import com.example.appbussines.Fragments.ListPersonalFragment;
 import com.example.appbussines.Fragments.User.UserFragment;
 import com.example.appbussines.Interfaces.onFragmentBtnSelected;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ContentActivity extends AppCompatActivity implements onFragmentBtnSelected {
-
+// autenticacion
+FirebaseAuth usuario;
+//fin
     private static final String TAG = "MenuContainer";
     private Fragment currentFragment;
 
@@ -82,6 +86,7 @@ public class ContentActivity extends AppCompatActivity implements onFragmentBtnS
                     LoadFrag( new ListPaisesFragment());
                     return true;
                 case R.id.LogOut:
+                    logOutUser();
                     return  true;
             }
 
@@ -99,4 +104,11 @@ public class ContentActivity extends AppCompatActivity implements onFragmentBtnS
     public void onButtonSelected(Fragment fragment) {
         LoadFrag( fragment);
     }
+    private void logOutUser(){
+        usuario.signOut();
+        startActivity(new Intent(ContentActivity.this, MainActivity.class));
+        finish(); // para que no pueda voler hacia atras cuando cierre sesión
+    }
+
+
 }

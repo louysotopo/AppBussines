@@ -127,7 +127,6 @@ public class AddPersonalFragment extends Fragment {
         initDates();
         initEditText();
         initButtons();
-        //database=FirebaseDatabase.getInstance();
         return view;
 
     }
@@ -163,8 +162,8 @@ public class AddPersonalFragment extends Fragment {
                         }
                     }
                     spinnerPositions = view.findViewById(R.id.spinnerPosition_add_personal);
-                    arrayAdapterPositions= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listPositions);
-                    arrayAdapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    arrayAdapterPositions= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,listPositions); //simple_spinner_dropdown_item
+                    arrayAdapterPositions.setDropDownViewResource(android.R.layout.simple_spinner_item);
                     spinnerPositions.setAdapter(arrayAdapterPositions);
                 }
             }
@@ -195,8 +194,8 @@ public class AddPersonalFragment extends Fragment {
                         }
                     }
                     spinnerCountries= view.findViewById(R.id.spinnerCountries_add_personal);
-                    arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,listCountries);
-                    arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    arrayAdapterCountries = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,listCountries); //.simple_spinner_dropdown_item
+                    arrayAdapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_item);
                     spinnerCountries.setAdapter(arrayAdapterCountries);
                 }
             }
