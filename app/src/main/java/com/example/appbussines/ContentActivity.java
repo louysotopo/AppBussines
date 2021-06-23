@@ -56,8 +56,6 @@ FirebaseAuth usuario;
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
-
-
         //start Display default Fragment
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -72,17 +70,15 @@ FirebaseAuth usuario;
             drawerLayout.closeDrawer(GravityCompat.START);
             switch (item.getItemId()){
                 case R.id.my_acount:
-                    Log.d("TO","my cuenta");
                     LoadFrag( new UserFragment());
                     return true;
-                case R.id.Personal:
-                    Log.d("TO","Personal");
+                case R.id.cursos:
                     LoadFrag( new ListPersonalFragment());
                     return true;
-                case R.id.Cargo:
+                case R.id.tareas:
                     LoadFrag( new ListCargosFragment());
                     return  true;
-                case R.id.Paises:
+                case R.id.justificaciones:
                     LoadFrag( new ListPaisesFragment());
                     return true;
                 case R.id.LogOut:

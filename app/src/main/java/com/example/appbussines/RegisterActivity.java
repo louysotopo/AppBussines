@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private SwitchMaterial switchStatus;
     private Button btn_registrar;
     private Button btn_sendToLogin;
-
+  
 
     /**
      * Variables de datos

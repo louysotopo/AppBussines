@@ -3,23 +3,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/my_acount"
-            android:title="Mi cuenta"
+            android:title="Datos Personales"
             android:icon="@drawable/ic_round_account_circle_24"
             />
         <item
-            android:id="@+id/Personal"
-            android:title="Personal"
-            android:icon="@drawable/ic_engineering_black_18dp"
+            android:id="@+id/cursos"
+            android:title="Cursos"
+            android:icon="@drawable/ic_baseline_menu_book_24"
             />
         <item
-            android:id="@+id/Cargo"
-            android:title="Cargos"
-            android:icon="@drawable/ic_reduce_capacity_black_18dp"
+            android:id="@+id/tareas"
+            android:title="Tareas Pendientes"
+            android:icon="@drawable/ic_baseline_playlist_add_check_24"
             />
         <item
-            android:id="@+id/Paises"
-            android:title="Paises"
-            android:icon="@drawable/ic_baseline_flag_24"
+            android:id="@+id/justificaciones"
+            android:title="Justificaciones"
+            android:icon="@drawable/ic_baseline_priority_high_24"
             />
         <item
             android:id="@+id/LogOut"
